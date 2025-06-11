@@ -23,7 +23,8 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     public carritoService: CarritoService,
-    public productService: ProductService
+    public productService: ProductService,
+    public modalAddService: ModalAddService,
   ) {}
 
   onImageError(event: Event) {
