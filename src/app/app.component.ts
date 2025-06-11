@@ -6,15 +6,17 @@ import { Router } from '@angular/router';
 import { Product } from './product';
 import { FormsModule } from '@angular/forms';
 import { WelcomeComponent } from "./welcome/welcome.component";
+import { CategorySidebarComponent } from './category/category-sidebar/category-sidebar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ProductListComponent, FormsModule, RouterModule, WelcomeComponent],
+  imports: [RouterOutlet, ProductListComponent, FormsModule, RouterModule, WelcomeComponent, CategorySidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  selectedCategory: number | null = null;
   title = 'cafeteria_online';
   _listFilter: string = ' ';
 
@@ -37,6 +39,16 @@ export class AppComponent {
     filterBy = filterBy.toLowerCase();
     return this.productService.products.filter((products: Product)=> products.name.toLowerCase().indexOf(filterBy)!==-1)
   }
+
+  onCategorySelected(categoryId: number | null): void {
+  if (categoryId === null) {
+    this.productService.filteredProducts = this.productService.products;
+  } else {
+    this.productService.filteredProducts = this.productService.products.filter(
+      (p) => p.categoryId === categoryId
+    );
+  }
+}
 
   
   ngOnInit(): void {

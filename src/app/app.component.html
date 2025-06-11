@@ -30,9 +30,7 @@
           <i class="fa fa-th-large me-2"></i> Productos
         </a>
         <div class="collapse ps-3" id="productos">
-          <a [routerLink]="['product/product-list']" class="list-group-item list-group-item-action bg-light">Administrar</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light">Ver fichas</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light">Informes</a>
+          <app-category-sidebar (categorySelected)="onCategorySelected($event)"></app-category-sidebar>
         </div>
 
         <a [routerLink]="['carrito/carrito-listar']" class="list-group-item list-group-item-action bg-light" role="button" >
