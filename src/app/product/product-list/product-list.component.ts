@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from '../product-list.service'; 
+import { CarritoService } from '../../carrito/carrito-listar/servicio/carrito-service';
 import { Product } from '../../product';
 
 @Component({
@@ -14,7 +15,13 @@ import { Product } from '../../product';
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
 
-  constructor(public productService: ProductService) {}
+  carrito: any[] = [];
+  total: number = 0;
+
+  constructor(
+    public carritoService: CarritoService,
+    public productService: ProductService
+  ) {}
 
   onImageError(event: Event) {
   const target = event.target as HTMLImageElement;
@@ -28,4 +35,10 @@ export class ProductListComponent implements OnInit {
       error: (err) => console.error('Error al cargar productos:', err)
     });
   }
+
+  agregar(producto: any) {
+      this.carritoService.agregar(producto);
+      alert(`${producto.name} agregado al carrito`);
+    }
+
 }
