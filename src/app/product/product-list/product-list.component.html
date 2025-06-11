@@ -1,9 +1,13 @@
-<div class="container">
-  <div class="card" *ngFor="let product of products">
-    <div class="card-body">
-      <h5 class="card-title">{{ product.name }}</h5>
-      <p class="card-text">{{ product.description }}</p>
-      <p class="card-text text-muted">${{ product.price }}</p>
+<div class="product-list">
+  <div *ngFor="let product of products" class="product-card">
+    <img [src]=" '../../assets/' + product.image"  alt="{{ product.name }}" class="product-image" (error)="onImageError($event)"/>
+    <div class="product-info">
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.description }}</p>
+      <p><strong>Precio:</strong> ${{ product.price }}</p>
+      <button type ="button" class="btn btn-sm btn-dark">
+        <i class="fa fa-shopping-cart"></i> Agregar
+      </button>
     </div>
   </div>
 </div>

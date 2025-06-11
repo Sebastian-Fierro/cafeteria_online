@@ -7,7 +7,7 @@ import { Product } from '../product';
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = '/api/products';
+  private apiUrl = 'http://localhost:3000/api/products';
   filteredProducts: Product[] = [];
   public products: Product[]= [];
 
