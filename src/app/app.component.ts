@@ -5,11 +5,12 @@ import { ProductService } from './product/product-list.service';
 import { Router } from '@angular/router';
 import { Product } from './product';
 import { FormsModule } from '@angular/forms';
+import { WelcomeComponent } from "./welcome/welcome.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ProductListComponent, FormsModule, RouterModule],
+  imports: [RouterOutlet, ProductListComponent, FormsModule, RouterModule, WelcomeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
