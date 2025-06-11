@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
   res.status(201).json(newOrder);
 });
 
-app.put('/:id/status', async (req, res) => {
+router.put('/:id/status', async (req, res) => {
   try {
     const updatedOrder = await prisma.order.update({
       where: { id: parseInt(req.params.id) },
