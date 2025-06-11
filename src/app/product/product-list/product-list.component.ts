@@ -3,24 +3,30 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from '../product-list.service'; 
 import { Product } from '../../product';
+import { ModalAddComponent } from "../../services/modal-add/modal-add.component";
+import { ModalAddService } from '../../services/modal-add.service';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, ModalAddComponent],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
+  isAdmin: boolean = true; // Para logica de login
 
-  constructor(public productService: ProductService) {}
+  constructor(public productService: ProductService, private modalAddService: ModalAddService) {}
 
   onImageError(event: Event) {
   const target = event.target as HTMLImageElement;
   target.src = 'assets/sin-imagen.png';
 }
 
+  abrirModalAdd(){
+    this.modalAddService.mostrarModalAdd();
+  }
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe({
@@ -28,4 +34,5 @@ export class ProductListComponent implements OnInit {
       error: (err) => console.error('Error al cargar productos:', err)
     });
   }
+
 }

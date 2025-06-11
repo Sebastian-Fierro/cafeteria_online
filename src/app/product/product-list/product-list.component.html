@@ -1,13 +1,40 @@
+<div *ngIf="isAdmin" class="col-md-2 text-end">
+  <button
+    type="button"
+    class="btn"
+    style="background-color: #6f4e37; color: white"
+    (click)="abrirModalAdd()"
+  >
+    Agregar producto
+  </button>
+</div>
+
 <div class="product-list">
-  <div *ngFor="let product of productService.filteredProducts" class="product-card">
-    <img [src]=" '../../assets/' + product.image"  alt="{{ product.name }}" class="product-image" (error)="onImageError($event)"/>
+  <div
+    *ngFor="let product of productService.filteredProducts"
+    class="product-card"
+  >
+    <img
+      [src]="'../../assets/' + product.image"
+      alt="{{ product.name }}"
+      class="product-image"
+      (error)="onImageError($event)"
+    />
     <div class="product-info">
       <h3>{{ product.name }}</h3>
       <p>{{ product.description }}</p>
       <p><strong>Precio:</strong> ${{ product.price }}</p>
-      <button type ="button" class="btn btn-sm btn-dark">
+      <button type="button" class="btn btn-sm btn-dark">
         <i class="fa fa-shopping-cart"></i> Agregar
+      </button>
+      <button *ngIf="isAdmin" type="button" class="btn btn-sm btn-warning ms-2">
+        <i class="fa fa-edit"></i> Editar
+      </button>
+      <button *ngIf="isAdmin" type="button" class="btn btn-sm btn-danger ms-2">
+        <i class="fa fa-trash"></i> Eliminar
       </button>
     </div>
   </div>
 </div>
+
+<app-modal-add></app-modal-add>

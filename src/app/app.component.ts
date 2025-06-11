@@ -6,17 +6,21 @@ import { Router } from '@angular/router';
 import { Product } from './product';
 import { FormsModule } from '@angular/forms';
 import { WelcomeComponent } from "./welcome/welcome.component";
+import { CommonModule } from '@angular/common';
+import { ModalAddComponent } from './services/modal-add/modal-add.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ProductListComponent, FormsModule, RouterModule, WelcomeComponent],
+  imports: [CommonModule, RouterOutlet, ProductListComponent, FormsModule, RouterModule, WelcomeComponent, ModalAddComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'cafeteria_online';
   _listFilter: string = ' ';
+  
+  isAdmin: boolean = true; // Para logica de login
 
   constructor(private productService: ProductService, private router:Router){}
 
