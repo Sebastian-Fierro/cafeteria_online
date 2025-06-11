@@ -14,7 +14,7 @@ import { Product } from '../../product';
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(public productService: ProductService) {}
 
   onImageError(event: Event) {
   const target = event.target as HTMLImageElement;
