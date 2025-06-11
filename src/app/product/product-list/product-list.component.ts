@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from '../product-list.service'; 
+import { CarritoService } from '../../carrito/carrito-listar/servicio/carrito-service';
 import { Product } from '../../product';
 import { ModalAddComponent } from "../../services/modal-add/modal-add.component";
 import { ModalAddService } from '../../services/modal-add.service';
@@ -17,7 +18,13 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   isAdmin: boolean = true; // Para logica de login
 
-  constructor(public productService: ProductService, private modalAddService: ModalAddService) {}
+  carrito: any[] = [];
+  total: number = 0;
+
+  constructor(
+    public carritoService: CarritoService,
+    public productService: ProductService
+  ) {}
 
   onImageError(event: Event) {
   const target = event.target as HTMLImageElement;
@@ -34,5 +41,10 @@ export class ProductListComponent implements OnInit {
       error: (err) => console.error('Error al cargar productos:', err)
     });
   }
+
+  agregar(producto: any) {
+      this.carritoService.agregar(producto);
+      alert(`${producto.name} agregado al carrito`);
+    }
 
 }

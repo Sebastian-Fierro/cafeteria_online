@@ -24,7 +24,7 @@
       <h3>{{ product.name }}</h3>
       <p>{{ product.description }}</p>
       <p><strong>Precio:</strong> ${{ product.price }}</p>
-      <button type="button" class="btn btn-sm btn-dark">
+      <button type="button" class="btn btn-sm btn-dark" (click)="agregar(product)">
         <i class="fa fa-shopping-cart"></i> Agregar
       </button>
       <button *ngIf="isAdmin" type="button" class="btn btn-sm btn-warning ms-2">
