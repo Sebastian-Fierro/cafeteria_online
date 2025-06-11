@@ -16,6 +16,12 @@ export class ProductListComponent implements OnInit {
 
   constructor(private productService: ProductService) {}
 
+  onImageError(event: Event) {
+  const target = event.target as HTMLImageElement;
+  target.src = 'assets/sin-imagen.png';
+}
+
+
   ngOnInit(): void {
     this.productService.getProducts().subscribe({
       next: (data) => this.products = data,
