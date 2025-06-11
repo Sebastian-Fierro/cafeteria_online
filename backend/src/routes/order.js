@@ -41,4 +41,16 @@ router.post("/", async (req, res) => {
   res.status(201).json(newOrder);
 });
 
+app.put('/:id/status', async (req, res) => {
+  try {
+    const updatedOrder = await prisma.order.update({
+      where: { id: parseInt(req.params.id) },
+      data: req.body,
+    });
+    res.json(updatedOrder);
+  } catch (error) {
+    res.status(400).json({ error: 'Error updating order status' });
+  }
+});
+
 module.exports = router;
