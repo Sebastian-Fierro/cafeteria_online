@@ -1,5 +1,5 @@
 <div class="product-list">
-  <div *ngFor="let product of products" class="product-card">
+  <div *ngFor="let product of productService.filteredProducts" class="product-card">
     <img [src]=" '../../assets/' + product.image"  alt="{{ product.name }}" class="product-image" (error)="onImageError($event)"/>
     <div class="product-info">
       <h3>{{ product.name }}</h3>
