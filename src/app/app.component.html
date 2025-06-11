@@ -8,7 +8,7 @@
 <body>
   <div class="d-flex" id="wrapper">
     <!-- Sidebar -->
-    <div class="bg-light border-right" id="sidebar-wrapper" style="min-width: 250px;">
+    <div class="bg-light border-end" id="sidebar-wrapper" style="min-width: 250px;">
       <div class="sidebar-heading p-3">
         <div class="user-panel d-flex align-items-center">
           <div class="image me-2">
@@ -79,9 +79,9 @@
       </nav>
 
       <div class="container-fluid mt-3">
-        <div class="card">
-          <div class="card-body">
-            <div class="row mb-3">
+        <div class="card mb-0"> <!-- Quitamos margen inferior de la tarjeta -->
+          <div class="card-body py-2"> <!-- Menor padding vertical -->
+            <div class="row align-items-center"> <!-- Alinea verticalmente el contenido -->
               <div class="col-md-2">Filtrar por:</div>
               <div class="col-md-4">
                 <input type="text" [(ngModel)]="listFilter" class="form-control" />
@@ -89,11 +89,14 @@
               <div class="col-md-4">
                 Filtrado por: {{ listFilter }}
               </div>
-              <div class="col-md-2"></div>
+              <div class="col-md-2 text-end">
+                <!-- Botones si los vas a agregar -->
+              </div>
             </div>
           </div>
         </div>
         <br>
+        
         <div class="container-fluid">
           <router-outlet></router-outlet>
         </div>
