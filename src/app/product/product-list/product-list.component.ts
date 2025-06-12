@@ -100,6 +100,7 @@ export class ProductListComponent implements OnInit {
   }
 
   abrirModalAdd() {
+    this.modalAddComponent.resetModal();
     this.modalAddService.mostrarModalAdd();
   }
 

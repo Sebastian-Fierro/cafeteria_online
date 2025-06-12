@@ -32,9 +32,9 @@ export class ModalAddComponent {
   ) {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
-      description: ['', Validators.required], // <- Agregado required
-      price: [0, [Validators.required, Validators.min(0.01)]],
-      stock: [0, [Validators.required, Validators.min(1)]],
+      description: ['', Validators.required],
+      price: [0.01, [Validators.required, Validators.min(0.01)]],
+      stock: [1, [Validators.required, Validators.min(1)]],
       categoryId: ['', Validators.required],
       image: [''],
       isActive: [true],
@@ -42,14 +42,14 @@ export class ModalAddComponent {
     this.loadCategories();
 
     if (this.modalAddService.isEditMode && this.modalAddService.productToEdit) {
-    this.loadProductToEdit(this.modalAddService.productToEdit);
-  }
+      this.loadProductToEdit(this.modalAddService.productToEdit);
+    }
   }
 
   loadCategories() {
     this.categoryService.getCategories().subscribe({
       next: (categories) => {
-        console.log('Categorías recibidas:', categories); // 👈 Verifica esto
+        console.log('Categorías recibidas:', categories);
         this.categories = categories;
       },
       error: (err) => {
@@ -59,47 +59,61 @@ export class ModalAddComponent {
   }
 
   loadProductToEdit(product: any): void {
-  this.isEditing = true;
-  this.productId = product.id;
+    this.isEditing = true;
+    this.productId = product.id;
 
-  this.productForm.patchValue({
-    name: product.name,
-    description: product.description,
-    price: product.price,
-    stock: product.stock,
-    categoryId: product.categoryId,
-    image: product.image,
-    isActive: product.isActive,
-  });
+    this.productForm.patchValue({
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      stock: product.stock,
+      categoryId: product.categoryId,
+      image: product.image,
+      isActive: product.isActive,
+    });
 
-  this.modalAddService.mostrarModalAdd();
-}
+    this.modalAddService.mostrarModalAdd();
+  }
 
   onSubmit(): void {
-  if (this.productForm.invalid) return;
+    if (this.productForm.invalid) return;
 
-  const formValue = this.productForm.value;
+    const formValue = this.productForm.value;
 
-  if (this.isEditing && this.productId !== null) {
-    // Modo editar
-    this.productService.updateProduct(this.productId, formValue).subscribe(
-      () => {
-        this.modalAddService.ocultarModalAdd();
-        window.location.reload(); // o emite un evento si prefieres
-      },
-      (error) => console.error('Error actualizando producto', error)
-    );
-  } else {
-    // Modo crear
-    this.productService.createProduct(formValue).subscribe(
-      () => {
-        this.modalAddService.ocultarModalAdd();
-        window.location.reload();
-      },
-      (error) => console.error('Error creando producto', error)
-    );
+    if (this.isEditing && this.productId !== null) {
+      // Modo editar
+      this.productService.updateProduct(this.productId, formValue).subscribe(
+        () => {
+          this.modalAddService.ocultarModalAdd();
+          window.location.reload();
+        },
+        (error) => console.error('Error actualizando producto', error)
+      );
+    } else {
+      // Modo crear
+      this.productService.createProduct(formValue).subscribe(
+        () => {
+          this.modalAddService.ocultarModalAdd();
+          window.location.reload();
+        },
+        (error) => console.error('Error creando producto', error)
+      );
+    }
   }
-}
+
+  resetModal() {
+    this.productId = null;
+    this.isEditing = false;
+    this.productForm = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      price: [0.01, [Validators.required, Validators.min(0.01)]],
+      stock: [1, [Validators.required, Validators.min(1)]],
+      categoryId: ['', Validators.required],
+      image: [''],
+      isActive: [true],
+    });
+  }
 
   ocultarModalAdd(): void {
     this.modalAddService.ocultarModalAdd();
