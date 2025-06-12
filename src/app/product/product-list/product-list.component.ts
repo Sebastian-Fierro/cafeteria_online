@@ -4,23 +4,27 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from '../product-list.service'; 
 import { CarritoService } from '../../carrito/carrito-listar/servicio/carrito-service';
 import { Product } from '../../product';
+import { ModalAddComponent } from "../../services/modal-add/modal-add.component";
+import { ModalAddService } from '../../services/modal-add.service';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, ModalAddComponent],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
+  isAdmin: boolean = true; // Para logica de login
 
   carrito: any[] = [];
   total: number = 0;
 
   constructor(
     public carritoService: CarritoService,
-    public productService: ProductService
+    public productService: ProductService,
+    public modalAddService: ModalAddService,
   ) {}
 
   onImageError(event: Event) {
@@ -28,6 +32,9 @@ export class ProductListComponent implements OnInit {
   target.src = 'assets/sin-imagen.png';
 }
 
+  abrirModalAdd(){
+    this.modalAddService.mostrarModalAdd();
+  }
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe({

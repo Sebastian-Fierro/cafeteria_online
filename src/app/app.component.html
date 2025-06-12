@@ -1,105 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cafeteria Online</title>
-</head>
-<body>
-  <div class="d-flex" id="wrapper">
-    <!-- Sidebar -->
-    <div class="bg-light border-end" id="sidebar-wrapper" style="min-width: 250px;">
-      <div class="sidebar-heading p-3">
-        <div class="user-panel d-flex align-items-center">
-          <div class="image me-2">
-            <img width="60" alt="ACME Logo" class="rounded-circle" src="assets/logo.png" />
-          </div>
-          <div>
-            <p class="mb-0 fw-bold">Cafeteria Online</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Menu -->
-      <div class="list-group list-group-flush">
-        <a [routerLink]="['welcome']" class="list-group-item list-group-item-action bg-light">
-          <i class="fas fa-home me-2"></i> Home
-        </a>
-
-        <a class="list-group-item list-group-item-action bg-light" data-bs-toggle="collapse" href="#productos" role="button">
-          <i class="fa fa-th-large me-2"></i> Productos
-        </a>
-        <div class="collapse ps-3" id="productos">
-          <a [routerLink]="['product/product-list']" class="list-group-item list-group-item-action bg-light">Administrar</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light">Ver fichas</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light">Informes</a>
-        </div>
-
-        <a [routerLink]="['carrito/carrito-listar']" class="list-group-item list-group-item-action bg-light" role="button" >
-          <a ></a>
-          <i class="fas fa-shopping-cart me-2"></i> Ver Carrito
-        </a>
-
-      </div>
-    </div>
-    <!-- /#sidebar-wrapper -->
-
-    <!-- Page Content -->
-    <div id="page-content-wrapper" class="flex-grow-1">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li><a class="dropdown-item" href="#">Something else</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
-      <div class="container-fluid mt-3">
-        <div class="card mb-0"> <!-- Quitamos margen inferior de la tarjeta -->
-          <div class="card-body py-2"> <!-- Menor padding vertical -->
-            <div class="row align-items-center"> <!-- Alinea verticalmente el contenido -->
-              <div class="col-md-2">Filtrar por:</div>
-              <div class="col-md-4">
-                <input type="text" [(ngModel)]="listFilter" class="form-control" />
-              </div>
-              <div class="col-md-4">
-                Filtrado por: {{ listFilter }}
-              </div>
-              <div class="col-md-2 text-end">
-                <!-- Botones si los vas a agregar -->
-              </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cafeteria Online</title>
+  </head>
+  <body>
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar -->
+      <div
+        class="bg-light border-end"
+        id="sidebar-wrapper"
+        style="min-width: 250px"
+      >
+        <div class="sidebar-heading p-3">
+          <div class="user-panel d-flex align-items-center">
+            <div class="image me-2">
+              <img
+                width="60"
+                alt="ACME Logo"
+                class="rounded-circle"
+                src="assets/logo.png"
+              />
+            </div>
+            <div>
+              <p class="mb-0 fw-bold">Cafeteria Online</p>
             </div>
           </div>
         </div>
-        <br>
-        
-        <div class="container-fluid">
-          <router-outlet></router-outlet>
+
+        <!-- Menu -->
+        <div class="list-group list-group-flush">
+          <a
+            [routerLink]="['welcome']"
+            class="list-group-item list-group-item-action bg-light"
+          >
+            <i class="fas fa-home me-2"></i> Home
+          </a>
+
+          <a
+            class="list-group-item list-group-item-action bg-light"
+            data-bs-toggle="collapse"
+            href="#productos"
+            role="button"
+          >
+            <i class="fa fa-th-large me-2"></i> Productos
+          </a>
+          <div class="collapse ps-3" id="productos">
+            <a
+              [routerLink]="['product/product-list']"
+              class="list-group-item list-group-item-action bg-light"
+              >Administrar</a
+            >
+          </div>
+
+          <a
+            [routerLink]="['carrito/carrito-listar']"
+            class="list-group-item list-group-item-action bg-light"
+            role="button"
+          >
+            <i class="fas fa-shopping-cart me-2"></i> Ver Carrito
+          </a>
         </div>
       </div>
+      <!-- /#sidebar-wrapper -->
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper" class="flex-grow-1">
+        <div class="container-fluid mt-3">
+          <div class="card mb-0">
+            <!-- Quitamos margen inferior de la tarjeta -->
+            <div class="card-body py-2">
+              <!-- Menor padding vertical -->
+              <div class="row align-items-center">
+                <!-- Alinea verticalmente el contenido -->
+                <div class="col-md-2">Filtrar por:</div>
+                <div class="col-md-4">
+                  <input
+                    type="text"
+                    [(ngModel)]="listFilter"
+                    class="form-control"
+                  />
+                </div>
+                <div class="col-md-4">Filtrado por: {{ listFilter }}</div>
+              </div>
+            </div>
+          </div>
+          <br />
+          
+
+          <div class="container-fluid">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </div>
+      <!-- /#page-content-wrapper -->
     </div>
-    <!-- /#page-content-wrapper -->
-  </div>
-</body>
+  </body>
 </html>

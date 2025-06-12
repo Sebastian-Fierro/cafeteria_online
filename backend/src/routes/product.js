@@ -27,4 +27,15 @@ router.post("/", async (req, res) => {
   res.status(201).json(newProduct);
 });
 
+router.put("/:id", async (req, res) => {
+  const updatedProduct = await prisma.product.update({
+    where: { id: parseInt(req.params.id) },
+    data: req.body,
+  });
+  if (!updatedProduct) {
+    return res.status(404).json({ error: "Product not found" });
+  }
+  res.json(updatedProduct);
+});
+
 module.exports = router;
