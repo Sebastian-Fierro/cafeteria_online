@@ -10,20 +10,38 @@ import { CommonModule } from '@angular/common';
 })
 export class CarritoListarComponent implements OnInit {
   carrito: any[] = [];
-  total: number = 0;
 
   constructor(private carritoService: CarritoService) {}
 
   ngOnInit() {
-  this.carrito = this.carritoService.obtener();
-  console.log('Carrito cargado:', this.carrito); 
-  this.total = this.carrito.reduce((acc, item) => acc + item.price * item.cantidad, 0);
+    this.carrito = this.carritoService.obtener();
+    console.log('Carrito cargado:', this.carrito); 
+  }
+
+  incrementar(item: any) {
+    item.cantidad++;
+    this.carritoService.actualizar(this.carrito);
+  }
+
+  decrementar(item: any) {
+    if (item.cantidad > 1) {
+      item.cantidad--;
+      this.carritoService.actualizar(this.carrito);
+    }
+  }
+
+  eliminar(item: any) {
+    this.carrito = this.carrito.filter(i => i !== item);
+    this.carritoService.actualizar(this.carrito);
   }
 
   vaciarCarrito() {
-  this.carritoService.vaciar();
-  this.carrito = [];
-  this.total = 0;
+    this.carritoService.vaciar();
+    this.carrito = [];
   }
-  
+
+
+  getTotal(): number {
+    return this.carrito.reduce((acc, item) => acc + item.price * item.cantidad, 0);
+  }
 }

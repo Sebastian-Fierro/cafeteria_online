@@ -22,12 +22,14 @@ export class CarritoService {
     localStorage.setItem(this.carritoKey, JSON.stringify(carrito));
   }
 
-
-
   obtener(): any[] {
     const data = localStorage.getItem(this.carritoKey);
     return data ? JSON.parse(data) : [];
   }
+
+  actualizar(carrito: any[]) {
+  localStorage.setItem(this.carritoKey, JSON.stringify(carrito));
+}
 
   vaciar() {
     localStorage.removeItem(this.carritoKey);
