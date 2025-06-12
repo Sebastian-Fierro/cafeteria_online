@@ -21,8 +21,17 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  console.log("Datos recibidos en POST:", req.body);
   const newProduct = await prisma.product.create({
-    data: req.body,
+    data: {
+        name: req.body.name,
+        description: req.body.description,
+        price: parseFloat(req.body.price), 
+        stock: parseInt(req.body.stock), 
+        categoryId: parseInt(req.body.categoryId), 
+        image: req.body.image,
+        isActive: req.body.isActive !== undefined ? req.body.isActive : true,
+      }
   });
   res.status(201).json(newProduct);
 });
@@ -30,12 +39,32 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   const updatedProduct = await prisma.product.update({
     where: { id: parseInt(req.params.id) },
-    data: req.body,
+    data: {
+      data: {
+        name: req.body.name,
+        description: req.body.description,
+        price: parseFloat(req.body.price), 
+        stock: parseInt(req.body.stock), 
+        categoryId: parseInt(req.body.categoryId), 
+        image: req.body.image,
+        isActive: req.body.isActive !== undefined ? req.body.isActive : true,
+      }
+    },
   });
   if (!updatedProduct) {
     return res.status(404).json({ error: "Product not found" });
   }
   res.json(updatedProduct);
+});
+
+router.delete("/:id", async (req, res) => {
+  const deletedProduct = await prisma.product.delete({
+    where: { id: parseInt(req.params.id) },
+  });
+  if (!deletedProduct) {
+    return res.status(404).json({ error: "Product not found" });
+  }
+  res.json({ message: "Product deleted successfully" });
 });
 
 module.exports = router;

@@ -1,4 +1,3 @@
-
 <!--Filtro-->
 <div class="card mb-0">
   <!-- Quitamos margen inferior de la tarjeta -->
@@ -11,8 +10,25 @@
         <input type="text" [(ngModel)]="listFilter" class="form-control" />
       </div>
       <div class="col-md-4">Filtrado por: {{ listFilter }}</div>
-      <div class="col-md-2 text-end">
+
+      <!--Switch modo admin-->
+      <div class="col-md-2">
+        <div class="d-flex align-items-center">
+          <label for="adminSwitch" class="form-label me-2 mb-0"
+            >Modo Admin</label
+          >
+          <div class="form-check form-switch mb-0">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="adminSwitch"
+              [(ngModel)]="isAdmin"
+            />
+          </div>
+        </div>
       </div>
+      
     </div>
   </div>
 </div>
@@ -23,7 +39,7 @@
   <button
     type="button"
     class="btn"
-    style="background-color: #BB8050; color: white"
+    style="background-color: #bb8050; color: white"
     (click)="abrirModalAdd()"
   >
     Agregar producto
@@ -44,13 +60,27 @@
       <h3>{{ product.name }}</h3>
       <p>{{ product.description }}</p>
       <p><strong>Precio:</strong> ${{ product.price }}</p>
-      <button type="button" class="btn btn-sm btn-dark" (click)="abrirModal(product)">
+      <button
+        type="button"
+        class="btn btn-sm btn-dark"
+        (click)="abrirModal(product)"
+      >
         <i class="fa fa-shopping-cart"></i> Agregar
       </button>
-      <button *ngIf="isAdmin" type="button" class="btn btn-sm btn-warning ms-2">
+      <button
+        *ngIf="isAdmin"
+        type="button"
+        class="btn btn-sm btn-warning ms-2"
+        (click)="editarProducto(product)"
+      >
         <i class="fa fa-edit"></i> Editar
       </button>
-      <button *ngIf="isAdmin" type="button" class="btn btn-sm btn-danger ms-2">
+      <button
+        *ngIf="isAdmin"
+        type="button"
+        class="btn btn-sm btn-danger ms-2"
+        (click)="eliminarProducto(product)"
+      >
         <i class="fa fa-trash"></i> Eliminar
       </button>
     </div>
@@ -62,5 +92,6 @@
   *ngIf="mostrarModal"
   [producto]="productoSeleccionado"
   (cerrar)="cerrarModal()"
-  (confirmar)="confirmarCantidad($event)">
+  (confirmar)="confirmarCantidad($event)"
+>
 </app-modal-cantidad>

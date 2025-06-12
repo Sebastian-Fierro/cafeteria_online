@@ -1,8 +1,12 @@
 <!-- The Modal -->
-<div class="modal" [ngStyle]="{'display':modalAddService.oculto}" tabindex="-1" role="dialog">
+<div
+  class="modal"
+  [ngStyle]="{ display: modalAddService.oculto }"
+  tabindex="-1"
+  role="dialog"
+>
   <div class="modal-dialog">
     <div class="modal-content">
-
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Crear Producto</h4>
@@ -13,52 +17,107 @@
         <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
           <div class="mb-3">
             <label for="name" class="form-label">Nombre del Producto</label>
-            <input type="text" class="form-control" id="name" formControlName="name" required>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              formControlName="name"
+              required
+            />
           </div>
 
           <div class="mb-3">
             <label for="description" class="form-label">Descripción</label>
-            <textarea class="form-control" id="description" formControlName="description" rows="3"></textarea>
+            <textarea
+              class="form-control"
+              id="description"
+              formControlName="description"
+              rows="3"
+            ></textarea>
           </div>
 
           <div class="row mb-3">
             <div class="col-md-6">
               <label for="price" class="form-label">Precio</label>
-              <input type="number" step="0.01" class="form-control" id="price" formControlName="price" required>
+              <input
+                type="number"
+                step="0.01"
+                class="form-control"
+                id="price"
+                formControlName="price"
+                required
+                min="0.01"
+              />
             </div>
             <div class="col-md-6">
               <label for="stock" class="form-label">Stock</label>
-              <input type="number" class="form-control" id="stock" formControlName="stock" required>
+              <input
+                type="number"
+                class="form-control"
+                id="stock"
+                formControlName="stock"
+                required
+                min="1"
+              />
             </div>
           </div>
 
           <div class="mb-3">
             <label for="category" class="form-label">Categoría</label>
-            <select class="form-select" id="category" formControlName="categoryId" required>
+            <select
+              class="form-select"
+              id="category"
+              formControlName="categoryId"
+              required
+            >
               <option value="">Seleccione una categoría</option>
-              <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+              <option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
+              </option>
             </select>
           </div>
 
           <div class="mb-3">
             <label for="image" class="form-label">Imagen (URL)</label>
-            <input type="text" class="form-control" id="image" formControlName="image">
+            <input
+              type="text"
+              class="form-control"
+              id="image"
+              formControlName="image"
+            />
             <small class="text-muted">Ejemplo: assets/productos/cafe.jpg</small>
           </div>
 
           <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="isActive" formControlName="isActive">
-            <label class="form-check-label" for="isActive">Producto activo</label>
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="isActive"
+              formControlName="isActive"
+            />
+            <label class="form-check-label" for="isActive"
+              >Producto activo</label
+            >
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="productForm.invalid"
+            >
+              Guardar
+            </button>
+            <button
+              (click)="ocultarModalAdd()"
+              type="button"
+              class="btn btn-danger"
+            >
+              Cancelar
+            </button>
           </div>
         </form>
       </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <button (click)="ocultarModalAdd()" type="button" class="btn btn-danger">Cancelar</button>
-      </div>
-
     </div>
   </div>
 </div>

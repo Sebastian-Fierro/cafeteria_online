@@ -20,4 +20,8 @@ export class ProductService {
   addProduct(product: Product): Observable<Product> {
     return this.http.post<Product>(this.apiUrl, product);
   }
+
+  deleteProduct(id: number) {
+    return this.http.delete(`http://localhost:3000/api/products/${id}`);
+  }
 }

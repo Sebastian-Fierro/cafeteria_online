@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Component } from '@angular/core';
 import { ModalAddService } from '../modal-add.service';
 import { Category } from '../../category';
@@ -16,6 +21,8 @@ import { CategoryService } from '../category.service';
 export class ModalAddComponent {
   productForm: FormGroup;
   categories: Category[] = [];
+  isEditing: boolean = false;
+  productId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -25,39 +32,75 @@ export class ModalAddComponent {
   ) {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
-      description: [''],
+      description: ['', Validators.required], // <- Agregado required
       price: [0, [Validators.required, Validators.min(0.01)]],
-      stock: [0, [Validators.required, Validators.min(0)]],
+      stock: [0, [Validators.required, Validators.min(1)]],
       categoryId: ['', Validators.required],
       image: [''],
-      isActive: [true]
+      isActive: [true],
+    });
+    this.loadCategories();
+
+    if (this.modalAddService.isEditMode && this.modalAddService.productToEdit) {
+    this.loadProductToEdit(this.modalAddService.productToEdit);
+  }
+  }
+
+  loadCategories() {
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        console.log('Categorías recibidas:', categories); // 👈 Verifica esto
+        this.categories = categories;
+      },
+      error: (err) => {
+        console.error('Error al cargar categorías:', err);
+      },
     });
   }
 
-  ngOnInit(): void {
-    // Cargar categorías desde tu servicio
-    this.loadCategories();
-  }
+  loadProductToEdit(product: any): void {
+  this.isEditing = true;
+  this.productId = product.id;
 
-  loadCategories(): void {
-    this.categoryService.getCategories().subscribe(
-      (categories) => this.categories = categories,
-      (error) => console.error('Error loading categories', error)
-    );
-  }
+  this.productForm.patchValue({
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    stock: product.stock,
+    categoryId: product.categoryId,
+    image: product.image,
+    isActive: product.isActive,
+  });
+
+  this.modalAddService.mostrarModalAdd();
+}
 
   onSubmit(): void {
-    if (this.productForm.valid) {
-      this.productService.createProduct(this.productForm.value).subscribe(
-        (response) => {
-          this.modalAddService.ocultarModalAdd();
-          // Aquí puedes agregar lógica adicional como recargar la lista de productos
-        },
-        (error) => console.error('Error creating product', error)
-      );
-    }
+  if (this.productForm.invalid) return;
+
+  const formValue = this.productForm.value;
+
+  if (this.isEditing && this.productId !== null) {
+    // Modo editar
+    this.productService.updateProduct(this.productId, formValue).subscribe(
+      () => {
+        this.modalAddService.ocultarModalAdd();
+        window.location.reload(); // o emite un evento si prefieres
+      },
+      (error) => console.error('Error actualizando producto', error)
+    );
+  } else {
+    // Modo crear
+    this.productService.createProduct(formValue).subscribe(
+      () => {
+        this.modalAddService.ocultarModalAdd();
+        window.location.reload();
+      },
+      (error) => console.error('Error creando producto', error)
+    );
   }
-  
+}
+
   ocultarModalAdd(): void {
     this.modalAddService.ocultarModalAdd();
   }
