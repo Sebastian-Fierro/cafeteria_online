@@ -31,7 +31,7 @@ export class ProductListComponent implements OnInit {
   productoSeleccionado: any = null;
   mostrarModal: boolean = false;
 
-  isAdmin: boolean = true; // Para logica de login
+  isAdmin: boolean = false; // Para logica de login
 
   carrito: any[] = [];
   total: number = 0;
