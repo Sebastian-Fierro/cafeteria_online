@@ -7,17 +7,21 @@ import { Product } from '../../product';
 import { ModalAddComponent } from "../../services/modal-add/modal-add.component";
 import { ModalAddService } from '../../services/modal-add.service';
 import { FormsModule } from '@angular/forms';
+import { ModalCantidadComponent } from '../../modal-cantidad/modal-cantidad.component';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, ModalAddComponent, FormsModule],
+  imports: [CommonModule, HttpClientModule, ModalAddComponent, FormsModule, ModalCantidadComponent],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
   _listFilter: string = '';
+
+  productoSeleccionado: any = null;
+  mostrarModal: boolean = false;
 
   
   isAdmin: boolean = true; // Para logica de login
@@ -62,6 +66,22 @@ export class ProductListComponent implements OnInit {
   }
   abrirModalAdd(){
     this.modalAddService.mostrarModalAdd();
+  }
+
+  abrirModal(product: any) {
+    this.productoSeleccionado = product;
+    this.mostrarModal = true;
+  }
+
+  cerrarModal() {
+    this.mostrarModal = false;
+    this.productoSeleccionado = null;
+  }
+
+  confirmarCantidad(cantidad: number) {
+    this.carritoService.agregar({ ...this.productoSeleccionado, cantidad });
+    this.cerrarModal();
+    alert(`${this.productoSeleccionado.name} x${cantidad} agregado al carrito`);
   }
 
 }

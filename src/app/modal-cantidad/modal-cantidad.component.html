@@ -1,0 +1,14 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <h4>{{ producto?.name }}</h4>
+    <p>{{ producto?.description }}</p>
+
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" [(ngModel)]="cantidad" min="1" class="form-control" />
+
+    <div class="modal-buttons">
+      <button class="btn btn-success" (click)="aceptar()">Aceptar</button>
+      <button class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+    </div>
+  </div>
+</div>
