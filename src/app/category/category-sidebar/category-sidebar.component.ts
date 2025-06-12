@@ -15,6 +15,7 @@ import { RouterOutlet, RouterModule } from '@angular/router';
 })
 export class CategorySidebarComponent implements OnInit {
   categories: Category[] = [];
+  selectedCategoryId: number | null = null;
 
   @Output() categorySelected = new EventEmitter<number | null>();
 
@@ -28,6 +29,7 @@ export class CategorySidebarComponent implements OnInit {
   }
 
   onSelectCategory(categoryId: number | null): void {
+    this.selectedCategoryId = categoryId;
     this.categorySelected.emit(categoryId);
   }
 }

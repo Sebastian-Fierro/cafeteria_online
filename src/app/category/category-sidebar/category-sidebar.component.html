@@ -3,6 +3,7 @@
   <button 
     class="list-group-item list-group-item-action"
     [routerLink]="['product/product-list']" 
+    [ngClass]="{ 'active': selectedCategoryId === null }"
     (click)="onSelectCategory(null)">
     Todas las categorías
   </button>
@@ -11,6 +12,7 @@
     *ngFor="let category of categories" 
     class="list-group-item list-group-item-action"
     [routerLink]="['product/product-list']"
+    [ngClass]="{ 'active': selectedCategoryId === category.id }"
     (click)="onSelectCategory(category.id)">
     {{ category.name }}
   </button>
