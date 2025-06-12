@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
 import { ModalAddService } from '../modal-add.service';
 import { Category } from '../../category';
@@ -9,7 +9,7 @@ import { CategoryService } from '../category.service';
 @Component({
   selector: 'app-modal-add',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './modal-add.component.html',
   styleUrl: './modal-add.component.css',
 })
@@ -40,7 +40,7 @@ export class ModalAddComponent {
   }
 
   loadCategories(): void {
-    this.productService.getCategories().subscribe(
+    this.categoryService.getCategories().subscribe(
       (categories) => this.categories = categories,
       (error) => console.error('Error loading categories', error)
     );
@@ -50,7 +50,7 @@ export class ModalAddComponent {
     if (this.productForm.valid) {
       this.productService.createProduct(this.productForm.value).subscribe(
         (response) => {
-          this.modalAddService.ocultarModal();
+          this.modalAddService.ocultarModalAdd();
           // Aquí puedes agregar lógica adicional como recargar la lista de productos
         },
         (error) => console.error('Error creating product', error)
