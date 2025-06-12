@@ -3,7 +3,7 @@ import { CarritoService } from './servicio/carrito-service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  standalone: true, // si estás usando standalone
+  standalone: true, 
   imports: [CommonModule],
   selector: 'app-carrito-listar',
   templateUrl: './carrito-listar.component.html',
@@ -16,7 +16,7 @@ export class CarritoListarComponent implements OnInit {
 
   ngOnInit() {
   this.carrito = this.carritoService.obtener();
-  console.log('Carrito cargado:', this.carrito); // DEBUG
+  console.log('Carrito cargado:', this.carrito); 
   this.total = this.carrito.reduce((acc, item) => acc + item.price, 0);
-}
+  }
 }
