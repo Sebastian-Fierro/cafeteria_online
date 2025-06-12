@@ -25,19 +25,19 @@
                                 <td>${{ item.price }}</td>
                                 <td>{{ item.cantidad }}</td>
                                 <td>
-                                    <div class="btn-group" role="group">
-                                    <button class="btn btn-sm btn-success" (click)="incrementar(item)">
-                                        <i class="fa fa-plus"></i>
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-sm" (click)="incrementar(item)" style="background-color: #DDC1A0; border-color: #DDC1A0;">
+                                    <i class="fa fa-plus"></i>
                                     </button>
                                     &nbsp;
-                                    <button class="btn btn-sm btn-danger" (click)="eliminar(item)">
-                                        <i class="fa fa-trash"></i>
+                                    <button class="btn btn-sm" (click)="eliminar(item)" style="background-color: #ffffff; border-color: #DDC1A0;">
+                                    <i class="fa fa-trash"></i>
                                     </button>
                                     &nbsp;
-                                    <button class="btn btn-sm btn-warning" (click)="decrementar(item)">
-                                        <i class="fa fa-minus"></i>
+                                    <button class="btn btn-sm" (click)="decrementar(item)" style="background-color: #DDC1A0; border-color: #DDC1A0;">
+                                    <i class="fa fa-minus"></i>
                                     </button>
-                                    </div>
+                                </div>
                                 </td>
                                 <td>${{ (item.price * item.cantidad) | number:'1.2-2' }}</td>
                                 </tr>
