@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
-  _listFilter: string = ' ';
+  _listFilter: string = '';
 
   
   isAdmin: boolean = true; // Para logica de login
