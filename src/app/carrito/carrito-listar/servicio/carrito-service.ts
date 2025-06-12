@@ -8,11 +8,18 @@ export class CarritoService {
 
   constructor() {}
 
-  agregar(producto: any) {
-    const carrito = this.obtener();
-    carrito.push(producto);
-    localStorage.setItem(this.carritoKey, JSON.stringify(carrito));
+agregar(producto: any) {
+  const carrito = this.obtener();
+  const existente = carrito.find(item => item.id === producto.id);
+
+  if (existente) {
+    existente.cantidad = (existente.cantidad || 1) + 1;
+  } else {
+    carrito.push({ ...producto, cantidad: 1 });
   }
+
+  localStorage.setItem(this.carritoKey, JSON.stringify(carrito));
+}
 
   obtener(): any[] {
     const data = localStorage.getItem(this.carritoKey);

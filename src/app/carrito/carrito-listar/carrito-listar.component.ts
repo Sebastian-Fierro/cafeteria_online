@@ -17,6 +17,13 @@ export class CarritoListarComponent implements OnInit {
   ngOnInit() {
   this.carrito = this.carritoService.obtener();
   console.log('Carrito cargado:', this.carrito); 
-  this.total = this.carrito.reduce((acc, item) => acc + item.price, 0);
+  this.total = this.carrito.reduce((acc, item) => acc + item.price * item.cantidad, 0);
   }
+
+  vaciarCarrito() {
+  this.carritoService.vaciar();
+  this.carrito = [];
+  this.total = 0;
+  }
+  
 }
