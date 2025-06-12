@@ -1,14 +1,34 @@
+
+
+<div class="card mb-0">
+  <!-- Quitamos margen inferior de la tarjeta -->
+  <div class="card-body py-2">
+    <!-- Menor padding vertical -->
+    <div class="row align-items-center">
+      <!-- Alinea verticalmente el contenido -->
+      <div class="col-md-2">Filtrar por:</div>
+      <div class="col-md-4">
+        <input type="text" [(ngModel)]="listFilter" class="form-control" />
+      </div>
+      <div class="col-md-4">Filtrado por: {{ listFilter }}</div>
+      <div class="col-md-2 text-end">
+        <!-- Botones si los vas a agregar -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<br />
 <div *ngIf="isAdmin" class="col-md-2 text-end">
   <button
     type="button"
     class="btn"
-    style="background-color: #6f4e37; color: white"
+    style="background-color: #BB8050; color: white"
     (click)="abrirModalAdd()"
   >
     Agregar producto
   </button>
 </div>
-
 <div class="product-list">
   <div
     *ngFor="let product of productService.filteredProducts"
@@ -24,7 +44,7 @@
       <h3>{{ product.name }}</h3>
       <p>{{ product.description }}</p>
       <p><strong>Precio:</strong> ${{ product.price }}</p>
-      <button type="button" class="btn btn-sm btn-dark" (click)="agregar(product)">
+      <button type ="button" class="btn btn-sm btn-dark">
         <i class="fa fa-shopping-cart"></i> Agregar
       </button>
       <button *ngIf="isAdmin" type="button" class="btn btn-sm btn-warning ms-2">

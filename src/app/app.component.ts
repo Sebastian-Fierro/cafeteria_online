@@ -8,15 +8,17 @@ import { FormsModule } from '@angular/forms';
 import { WelcomeComponent } from "./welcome/welcome.component";
 import { CommonModule } from '@angular/common';
 import { ModalAddComponent } from './services/modal-add/modal-add.component';
+import { CategorySidebarComponent } from './category/category-sidebar/category-sidebar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ProductListComponent, FormsModule, RouterModule, WelcomeComponent, ModalAddComponent],
+  imports: [CommonModule, RouterOutlet, ProductListComponent, FormsModule, RouterModule, WelcomeComponent, ModalAddComponent, CategorySidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  selectedCategory: number | null = null;
   title = 'cafeteria_online';
   _listFilter: string = ' ';
   
@@ -28,19 +30,18 @@ export class AppComponent {
 
 
 
-  get listFilter(): string{
-    return this._listFilter;
+  
+  
+
+  onCategorySelected(categoryId: number | null): void {
+  if (categoryId === null) {
+    this.productService.filteredProducts = this.productService.products;
+  } else {
+    this.productService.filteredProducts = this.productService.products.filter(
+      (p) => p.categoryId === categoryId
+    );
   }
-  set listFilter(value: string) {
-     this._listFilter = value;
-   this.productService.filteredProducts=
-       this.listFilter ? this.performFilter(this.listFilter):
-       this.productService.products;
-  }
-  performFilter(filterBy: string): Product[]{
-    filterBy = filterBy.toLowerCase();
-    return this.productService.products.filter((products: Product)=> products.name.toLowerCase().indexOf(filterBy)!==-1)
-  }
+}
 
   
   ngOnInit(): void {

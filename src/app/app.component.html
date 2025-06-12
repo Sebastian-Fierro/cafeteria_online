@@ -38,21 +38,12 @@
             <i class="fas fa-home me-2"></i> Home
           </a>
 
-          <a
-            class="list-group-item list-group-item-action bg-light"
-            data-bs-toggle="collapse"
-            href="#productos"
-            role="button"
-          >
-            <i class="fa fa-th-large me-2"></i> Productos
-          </a>
-          <div class="collapse ps-3" id="productos">
-            <a
-              [routerLink]="['product/product-list']"
-              class="list-group-item list-group-item-action bg-light"
-              >Administrar</a
-            >
-          </div>
+        <a class="list-group-item list-group-item-action bg-light" data-bs-toggle="collapse" href="#productos" role="button">
+          <i class="fa fa-th-large me-2"></i> Productos
+        </a>
+        <div class="collapse ps-3" id="productos">
+          <app-category-sidebar (categorySelected)="onCategorySelected($event)"></app-category-sidebar>
+        </div>
 
           <a
             [routerLink]="['carrito/carrito-listar']"
@@ -65,36 +56,19 @@
       </div>
       <!-- /#sidebar-wrapper -->
 
-      <!-- Page Content -->
-      <div id="page-content-wrapper" class="flex-grow-1">
-        <div class="container-fluid mt-3">
-          <div class="card mb-0">
-            <!-- Quitamos margen inferior de la tarjeta -->
-            <div class="card-body py-2">
-              <!-- Menor padding vertical -->
-              <div class="row align-items-center">
-                <!-- Alinea verticalmente el contenido -->
-                <div class="col-md-2">Filtrar por:</div>
-                <div class="col-md-4">
-                  <input
-                    type="text"
-                    [(ngModel)]="listFilter"
-                    class="form-control"
-                  />
-                </div>
-                <div class="col-md-4">Filtrado por: {{ listFilter }}</div>
-              </div>
-            </div>
-          </div>
-          <br />
-          
+    <!-- Page Content -->
+    <div id="page-content-wrapper" class="flex-grow-1">
+      
 
-          <div class="container-fluid">
-            <router-outlet></router-outlet>
-          </div>
+      <div class="container-fluid mt-3">
+        
+        
+        <div class="container-fluid">
+          <router-outlet></router-outlet>
         </div>
       </div>
-      <!-- /#page-content-wrapper -->
     </div>
-  </body>
+    <!-- /#page-content-wrapper -->
+  </div>
+</body>
 </html>
