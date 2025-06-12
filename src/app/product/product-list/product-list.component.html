@@ -1,13 +1,4 @@
-<div *ngIf="isAdmin" class="col-md-2 text-end">
-  <button
-    type="button"
-    class="btn"
-    style="background-color: #6f4e37; color: white"
-    (click)="abrirModalAdd()"
-  >
-    Agregar producto
-  </button>
-</div>
+
 
 <div class="card mb-0">
   <!-- Quitamos margen inferior de la tarjeta -->
@@ -26,8 +17,18 @@
     </div>
   </div>
 </div>
-<br />
 
+<br />
+<div *ngIf="isAdmin" class="col-md-2 text-end">
+  <button
+    type="button"
+    class="btn"
+    style="background-color: #6f4e37; color: white"
+    (click)="abrirModalAdd()"
+  >
+    Agregar producto
+  </button>
+</div>
 <div class="product-list">
   <div
     *ngFor="let product of productService.filteredProducts"
