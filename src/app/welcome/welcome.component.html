@@ -1,3 +1,4 @@
+<h2 class="text-center my-4">Productos destacados</h2>
 <ngb-carousel *ngIf="images && images.length" class="custom-carousel">
   <ng-template ngbSlide *ngFor="let img of images; let i = index">
     <img [src]="img" class="carousel-img" [alt]="'Imagen ' + (i + 1)">
