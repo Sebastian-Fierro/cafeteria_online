@@ -74,23 +74,7 @@
       </nav>
 
       <div class="container-fluid mt-3">
-        <div class="card mb-0"> <!-- Quitamos margen inferior de la tarjeta -->
-          <div class="card-body py-2"> <!-- Menor padding vertical -->
-            <div class="row align-items-center"> <!-- Alinea verticalmente el contenido -->
-              <div class="col-md-2">Filtrar por:</div>
-              <div class="col-md-4">
-                <input type="text" [(ngModel)]="listFilter" class="form-control" />
-              </div>
-              <div class="col-md-4">
-                Filtrado por: {{ listFilter }}
-              </div>
-              <div class="col-md-2 text-end">
-                <!-- Botones si los vas a agregar -->
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
+        
         
         <div class="container-fluid">
           <router-outlet></router-outlet>

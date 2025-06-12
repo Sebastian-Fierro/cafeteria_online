@@ -1,11 +1,38 @@
+<div class="card mb-0">
+  <!-- Quitamos margen inferior de la tarjeta -->
+  <div class="card-body py-2">
+    <!-- Menor padding vertical -->
+    <div class="row align-items-center">
+      <!-- Alinea verticalmente el contenido -->
+      <div class="col-md-2">Filtrar por:</div>
+      <div class="col-md-4">
+        <input type="text" [(ngModel)]="listFilter" class="form-control" />
+      </div>
+      <div class="col-md-4">Filtrado por: {{ listFilter }}</div>
+      <div class="col-md-2 text-end">
+        <!-- Botones si los vas a agregar -->
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+
 <div class="product-list">
-  <div *ngFor="let product of productService.filteredProducts" class="product-card">
-    <img [src]=" '../../assets/' + product.image"  alt="{{ product.name }}" class="product-image" (error)="onImageError($event)"/>
+  <div
+    *ngFor="let product of productService.filteredProducts"
+    class="product-card"
+  >
+    <img
+      [src]="'../../assets/' + product.image"
+      alt="{{ product.name }}"
+      class="product-image"
+      (error)="onImageError($event)"
+    />
     <div class="product-info">
       <h3>{{ product.name }}</h3>
       <p>{{ product.description }}</p>
       <p><strong>Precio:</strong> ${{ product.price }}</p>
-      <button type ="button" class="btn btn-sm btn-dark">
+      <button type="button" class="btn btn-sm btn-dark">
         <i class="fa fa-shopping-cart"></i> Agregar
       </button>
     </div>

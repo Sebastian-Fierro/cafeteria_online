@@ -26,19 +26,8 @@ export class AppComponent {
 
 
 
-  get listFilter(): string{
-    return this._listFilter;
-  }
-  set listFilter(value: string) {
-     this._listFilter = value;
-   this.productService.filteredProducts=
-       this.listFilter ? this.performFilter(this.listFilter):
-       this.productService.products;
-  }
-  performFilter(filterBy: string): Product[]{
-    filterBy = filterBy.toLowerCase();
-    return this.productService.products.filter((products: Product)=> products.name.toLowerCase().indexOf(filterBy)!==-1)
-  }
+  
+  
 
   onCategorySelected(categoryId: number | null): void {
   if (categoryId === null) {
