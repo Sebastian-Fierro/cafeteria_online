@@ -3,12 +3,13 @@ import { CategoryService } from '../category-sidebar.service';
 import { Category } from '../../category';
 import { CommonModule } from '@angular/common'; // ✅ Importa esto
 import { HttpClientModule } from '@angular/common/http'; // si usas HttpClient en el HTML
+import { RouterOutlet, RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-category-sidebar',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, RouterModule],
   templateUrl: './category-sidebar.component.html',
   styleUrls: ['./category-sidebar.component.css']
 })
