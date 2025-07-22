@@ -1,0 +1,137 @@
+p {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+p strong {
+  margin-right: 0.5rem;
+}
+
+p strong.cambiar-estado {
+  margin-left: 2rem; /* espacio considerable */
+}
+
+
+.estado-btn {
+  font-size: 0.75rem; /* texto pequeño */
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  display: inline-block;
+  text-transform: capitalize;
+  cursor: default;
+}
+
+/* Colores por estado */
+.estado-btn.pending {
+  background-color: #fff9db;
+  color: #a07800;
+  border: 1px solid #ffe58f;
+}
+
+.estado-btn.in_preparation {
+  background-color: #e6f4ff;
+  color: #005fa3;
+  border: 1px solid #91d5ff;
+}
+
+.estado-btn.ready_for_pickup {
+  background-color: #d9f0fb;
+  color: #096dd9;
+  border: 1px solid #69c0ff;
+}
+
+.estado-btn.completed {
+  background-color: #e6ffed;
+  color: #237804;
+  border: 1px solid #b7eb8f;
+}
+
+.estado-btn.cancelled {
+  background-color: #fff1f0;
+  color: #a8071a;
+  border: 1px solid #ffa39e;
+}
+
+
+.estado-select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+}
+
+h6.detalle-titulo {
+  margin-top: 20px;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  color: #53452e;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-left: 4px solid #e6c68a;
+  padding-left: 10px;
+  background-color: #fff4dd;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  border-radius: 4px;
+}
+
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px; /* espacio entre filas */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table thead tr {
+  background-color: #4a90e2;
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.table thead th {
+  padding: 12px 15px;
+  border-bottom: none;
+}
+
+.table tbody tr {
+  background-color: #f9fbfd;
+  transition: background-color 0.3s ease;
+  cursor: default;
+}
+
+.table tbody tr:hover {
+  background-color: #e1e9f8;
+}
+
+.table tbody td {
+  padding: 14px 15px;
+  font-size: 0.9rem;
+  color: #333;
+  border-top: 1px solid #dde3ec;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Alineación numérica para cantidades y precios */
+.table tbody td:nth-child(2),
+.table tbody td:nth-child(3),
+.table tbody td:nth-child(4) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
