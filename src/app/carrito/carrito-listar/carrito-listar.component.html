@@ -56,7 +56,7 @@
                         <h5>Resumen Compra</h5>
                         <hr />
                         <h5>Total: ${{ getTotal() | number:'1.2-2' }}</h5>
-                        <button class="btn btn-dark">Procesar compra</button>
+                        <button class="btn btn-dark" (click)="procesarCompra()">Procesar compra</button>
                         <button class="btn btn-danger mt-3" (click)="vaciarCarrito()">Vaciar Carrito</button>
                     </div>
                     </div>

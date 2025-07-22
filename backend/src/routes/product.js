@@ -39,7 +39,6 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   const updatedProduct = await prisma.product.update({
     where: { id: parseInt(req.params.id) },
-    data: {
       data: {
         name: req.body.name,
         description: req.body.description,
@@ -48,8 +47,7 @@ router.put("/:id", async (req, res) => {
         categoryId: parseInt(req.body.categoryId), 
         image: req.body.image,
         isActive: req.body.isActive !== undefined ? req.body.isActive : true,
-      }
-    },
+      },
   });
   if (!updatedProduct) {
     return res.status(404).json({ error: "Product not found" });
