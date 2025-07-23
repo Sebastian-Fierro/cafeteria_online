@@ -16,5 +16,6 @@ COPY . .
 # Expone el puerto en el que corre tu app
 EXPOSE 4200
 
+
 # Comando para ejecutar la aplicación
 CMD ["npx", "ng", "serve", "--host", "0.0.0.0"]
