@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CarritoService } from './servicio/carrito-service'; 
+import { CarritoService } from './servicio/carrito-service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { OrdenService } from '../../services/orden.service';
@@ -7,9 +7,8 @@ import { lastValueFrom } from 'rxjs';
 import { ProductServiceService } from '../../services/product-service.service';
 import { jsPDF } from 'jspdf';
 
-
 @Component({
-  standalone: true, 
+  standalone: true,
   imports: [CommonModule, HttpClientModule],
   selector: 'app-carrito-listar',
   templateUrl: './carrito-listar.component.html',
@@ -17,11 +16,15 @@ import { jsPDF } from 'jspdf';
 export class CarritoListarComponent implements OnInit {
   carrito: any[] = [];
 
-  constructor(private carritoService: CarritoService, private ordenService: OrdenService, private productService: ProductServiceService) {}
+  constructor(
+    private carritoService: CarritoService,
+    private ordenService: OrdenService,
+    private productService: ProductServiceService
+  ) {}
 
   ngOnInit() {
     this.carrito = this.carritoService.obtener();
-    console.log('Carrito cargado:', this.carrito); 
+    console.log('Carrito cargado:', this.carrito);
   }
 
   incrementar(item: any) {
@@ -37,7 +40,7 @@ export class CarritoListarComponent implements OnInit {
   }
 
   eliminar(item: any) {
-    this.carrito = this.carrito.filter(i => i !== item);
+    this.carrito = this.carrito.filter((i) => i !== item);
     this.carritoService.actualizar(this.carrito);
   }
 
@@ -46,13 +49,15 @@ export class CarritoListarComponent implements OnInit {
     this.carrito = [];
   }
 
-
   getTotal(): number {
-    return this.carrito.reduce((acc, item) => acc + item.price * item.cantidad, 0);
+    return this.carrito.reduce(
+      (acc, item) => acc + item.price * item.cantidad,
+      0
+    );
   }
 
-   async procesarCompra() {
-    const items = this.carrito.map(item => ({
+  async procesarCompra() {
+    const items = this.carrito.map((item) => ({
       productId: item.id,
       quantity: item.cantidad,
       price: item.price,
@@ -66,7 +71,9 @@ export class CarritoListarComponent implements OnInit {
     };
 
     try {
-      const respuesta = await lastValueFrom(this.ordenService.crearOrden(orden));
+      const respuesta = await lastValueFrom(
+        this.ordenService.crearOrden(orden)
+      );
       console.log('Orden creada:', respuesta);
 
       await this.actualizarStockProductos();
@@ -91,46 +98,82 @@ export class CarritoListarComponent implements OnInit {
       };
 
       // Espera la actualización de stock usando lastValueFrom
-      await lastValueFrom(this.productService.updateProduct(item.id, productoActualizado));
+      await lastValueFrom(
+        this.productService.updateProduct(item.id, productoActualizado)
+      );
     }
   }
 
   generarBoletaPDF() {
-  const doc = new jsPDF();
-  let y = 20;
+    const doc = new jsPDF();
+    let y = 20;
 
-  doc.setFontSize(16);
-  doc.text('Boleta de Compra - Cafetería Online', 20, y);
-  y += 10;
+    // Encabezado
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Boleta de Compra', doc.internal.pageSize.getWidth() / 2, y, {
+      align: 'center',
+    });
+    y += 8;
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Cafetería Online', doc.internal.pageSize.getWidth() / 2, y, {
+      align: 'center',
+    });
+    y += 10;
 
-  doc.setFontSize(12);
-  doc.text(`Fecha: ${new Date().toLocaleString()}`, 20, y);
-  y += 10;
+    // Fecha
+    doc.setFontSize(11);
+    doc.text(`Fecha: ${new Date().toLocaleString()}`, 20, y);
+    y += 8;
 
-  doc.text('Detalle de productos:', 20, y);
-  y += 10;
+    // Línea divisoria
+    doc.line(20, y, 190, y);
+    y += 5;
 
-  doc.setFontSize(10);
-  this.carrito.forEach(item => {
-    doc.text(
-      `${item.name} (${item.cantidad} x $${item.price.toFixed(2)}) - $${(item.price * item.cantidad).toFixed(2)}`,
-      20,
-      y
-    );
+    // Título tabla
+    doc.setFont('helvetica', 'bold');
+    doc.text('Producto', 20, y);
+    doc.text('Cant.', 100, y);
+    doc.text('P. Unit', 130, y);
+    doc.text('Subtotal', 160, y);
     y += 7;
-  });
+    doc.setFont('helvetica', 'normal');
 
-  y += 5;
-  doc.setFontSize(12);
-  doc.text(`TOTAL: $${this.getTotal().toFixed(2)}`, 20, y);
+    // Detalles del carrito
+    this.carrito.forEach((item) => {
+      const subtotal = (item.price * item.cantidad).toFixed(2);
+      doc.text(item.name, 20, y);
+      doc.text(`${item.cantidad}`, 105, y, { align: 'right' });
+      doc.text(`$${item.price.toFixed(2)}`, 135, y, { align: 'right' });
+      doc.text(`$${subtotal}`, 180, y, { align: 'right' });
+      y += 6;
+    });
 
-  y += 20;
-  doc.setFontSize(10);
-  doc.text('Gracias por tu compra', 20, y);
+    // Línea divisoria
+    y += 4;
+    doc.line(20, y, 190, y);
+    y += 6;
 
-  // Descargar PDF
-  doc.save(`boleta_${Date.now()}.pdf`);
-}
+    // Total
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`TOTAL: $${this.getTotal().toFixed(2)}`, 160, y, {
+      align: 'right',
+    });
 
+    // Mensaje final
+    y += 20;
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'italic');
+    doc.text(
+      'Gracias por tu compra. ¡Te esperamos nuevamente!',
+      doc.internal.pageSize.getWidth() / 2,
+      y,
+      { align: 'center' }
+    );
 
+    // Descargar PDF
+    doc.save(`boleta_${Date.now()}.pdf`);
+  }
 }
