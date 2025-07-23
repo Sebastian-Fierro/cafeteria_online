@@ -35,6 +35,7 @@ jobs:
         docker push ${{ secrets.DOCKERHUB_USERNAME2 }}/cafeteria_online:latest
 
   Deploy:
+    needs: [Ci1, Ci2]
     steps:
     - name: Configure SSH
       run: |
@@ -45,11 +46,11 @@ jobs:
     - name: Deploy to EC2
       run: |
         #Conecta EC2 via SSH y
-        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/ec2_key.pem azureuser@${{ secrets.EC2_IP }} << 'EOF'
+        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/ec2_key.pem azureuser@${{ secrets.EC2_IP }} << EOF
               
           set -e
 
-          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
           docker pull docker.io/${{ secrets.DOCKERHUB_USERNAME }}/cafeteria_online:latest
    
@@ -63,7 +64,7 @@ jobs:
             -e DATABASE_URL="${{ secrets.DB_URL }}" \
             docker.io/${{ secrets.DOCKERHUB_USERNAME }}/cafeteria_online:latest
 
-          echo "${{ secrets.DOCKERHUB_PASSWORD2 }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME2 }}" --password-stdin
+          echo "${{ secrets.DOCKERHUB_TOKEN2 }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME2 }}" --password-stdin
 
           docker pull docker.io/${{ secrets.DOCKERHUB_USERNAME2 }}/cafeteria_online:latest
    
