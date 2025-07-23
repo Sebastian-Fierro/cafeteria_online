@@ -12,8 +12,5 @@ COPY . .
 
 EXPOSE 3000
 
-COPY wait-for-db.sh .
-RUN chmod +x wait-for-db.sh
-
-CMD ["./wait-for-db.sh"]
+CMD ["npm", "run", "start"]
 
