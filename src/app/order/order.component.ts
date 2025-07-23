@@ -17,7 +17,7 @@ export class OrderComponent {
 
   ngOnInit(): void {
     this.orderService.getOrdenes().subscribe({
-      next: (data) => this.ordenes = data,
+      next: (data) => this.ordenes = data.sort((a, b) => b.id - a.id),
       error: (err) => console.error('Error al obtener órdenes', err)
     });
   }

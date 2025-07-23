@@ -57,6 +57,12 @@ export class CarritoListarComponent implements OnInit {
   }
 
   async procesarCompra() {
+
+    if (this.carrito.length === 0) {
+    alert('El carrito está vacío. Agrega al menos un producto para continuar con la compra.');
+    return;
+  }
+
     const items = this.carrito.map((item) => ({
       productId: item.id,
       quantity: item.cantidad,

@@ -1,0 +1,47 @@
+<div class="container mt-5">
+  <h2>Seguimiento de Pedido</h2>
+
+  <div class="mb-4 busqueda-cafeteria">
+    <label for="codigoPedido" class="form-label"
+      >Ingresa tu código de pedido:</label
+    >
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control cafeteria-input"
+        [(ngModel)]="codigoPedido"
+        id="codigoPedido"
+        placeholder="Ej: 123"
+      />
+      <button class="btn cafeteria-btn" (click)="buscarPedido()">Buscar</button>
+    </div>
+  </div>
+
+  <div
+    *ngIf="ordenEncontrada && ordenEncontrada.status !== 'CANCELLED'"
+    class="card p-4 shadow"
+  >
+    <h5>Pedido #{{ ordenEncontrada.id }}</h5>
+
+    <!-- Timeline de seguimiento -->
+    <div class="tracking-steps">
+      <div
+        *ngFor="let estado of estados; let i = index"
+        class="step"
+        [class.completed]="esEstadoCompletado(estado)"
+        [class.actual]="ordenEncontrada.status === estado.valor"
+      >
+        <div class="circle">{{ i + 1 }}</div>
+        <span class="label">{{ estado.etiqueta }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="ordenEncontrada && ordenEncontrada.status === 'CANCELLED'"
+    class="alert alert-cancelled mt-4"
+  >
+    <strong>Tu pedido ha sido cancelado.</strong> Si tienes dudas, por favor
+    contáctanos.
+  </div>
+</div>
