@@ -36,7 +36,7 @@ jobs:
         docker push ${{ secrets.DOCKERHUB_USERNAME2 }}/cafeteria_online:latest
 
   Deploy:
-    needs: [Ci1, Ci2]
+    needs: Ci2
     steps:
     - name: Configure SSH
       run: |
