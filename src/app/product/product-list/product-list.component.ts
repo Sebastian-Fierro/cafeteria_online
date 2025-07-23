@@ -48,6 +48,7 @@ export class ProductListComponent implements OnInit {
     const target = event.target as HTMLImageElement;
     target.src = 'assets/sin-imagen.png';
   }
+
   get listFilter(): string {
     return this._listFilter;
   }
@@ -66,15 +67,31 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.adminService.adminMode$.subscribe((modo) => {
-      this.isAdmin = modo;
-    });
+  this.adminService.adminMode$.subscribe((modo) => {
+    this.isAdmin = modo;
 
-    this.productService.getProducts().subscribe({
-      next: (data) => (this.products = data),
-      error: (err) => console.error('Error al cargar productos:', err),
-    });
-  }
+    if (this.isAdmin) {
+      this.productService.getProducts().subscribe({
+        next: (data) => {
+          this.products = data;
+          this.productService.products = data;
+          this.productService.filteredProducts = data;
+        },
+        error: (err) => console.error('Error al cargar todos los productos:', err),
+      });
+    } else {
+      this.productService.getProductosActivos().subscribe({
+        next: (data) => {
+          this.products = data;
+          this.productService.products = data;
+          this.productService.filteredProducts = data;
+        },
+        error: (err) => console.error('Error al cargar productos activos:', err),
+      });
+    }
+  });
+}
+
 
   agregar(producto: any) {
     this.carritoService.agregar(producto);
@@ -86,11 +103,7 @@ export class ProductListComponent implements OnInit {
   }
 
   eliminarProducto(product: any) {
-    if (
-      confirm(
-        `¿Estás seguro de eliminar el producto "${product.name}"?`
-      )
-    ) {
+    if (confirm(`¿Estás seguro de eliminar el producto "${product.name}"?`)) {
       this.productService.deleteProduct(product.id).subscribe({
         next: () => {
           this.products = this.products.filter((p) => p.id !== product.id);

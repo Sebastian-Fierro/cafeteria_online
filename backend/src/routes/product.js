@@ -10,6 +10,24 @@ router.get("/", async (req, res) => {
   res.json(products);
 });
 
+// GET solo productos activos
+router.get("/activos", async (req, res) => {
+  try {
+    const productosActivos = await prisma.product.findMany({
+      where: { isActive: true },
+    });
+
+    if (!productosActivos || productosActivos.length === 0) {
+      return res.status(404).json({ error: "No hay productos activos" });
+    }
+
+    res.json(productosActivos);
+  } catch (error) {
+    console.error("Error al obtener productos activos:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
 router.get("/:id", async (req, res) => {
   const product = await prisma.product.findUnique({
     where: { id: parseInt(req.params.id) },
