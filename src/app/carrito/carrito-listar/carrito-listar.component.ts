@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { OrdenService } from '../../services/orden.service';
 import { lastValueFrom } from 'rxjs';
 import { ProductServiceService } from '../../services/product-service.service';
+import { jsPDF } from 'jspdf';
+
 
 @Component({
   standalone: true, 
@@ -69,7 +71,7 @@ export class CarritoListarComponent implements OnInit {
 
       await this.actualizarStockProductos();
 
-      alert('Compra realizada y stock actualizado');
+      this.generarBoletaPDF();
       this.vaciarCarrito();
     } catch (error) {
       console.error('Error al procesar la compra o actualizar stock:', error);
@@ -92,5 +94,43 @@ export class CarritoListarComponent implements OnInit {
       await lastValueFrom(this.productService.updateProduct(item.id, productoActualizado));
     }
   }
+
+  generarBoletaPDF() {
+  const doc = new jsPDF();
+  let y = 20;
+
+  doc.setFontSize(16);
+  doc.text('Boleta de Compra - Cafetería Online', 20, y);
+  y += 10;
+
+  doc.setFontSize(12);
+  doc.text(`Fecha: ${new Date().toLocaleString()}`, 20, y);
+  y += 10;
+
+  doc.text('Detalle de productos:', 20, y);
+  y += 10;
+
+  doc.setFontSize(10);
+  this.carrito.forEach(item => {
+    doc.text(
+      `${item.name} (${item.cantidad} x $${item.price.toFixed(2)}) - $${(item.price * item.cantidad).toFixed(2)}`,
+      20,
+      y
+    );
+    y += 7;
+  });
+
+  y += 5;
+  doc.setFontSize(12);
+  doc.text(`TOTAL: $${this.getTotal().toFixed(2)}`, 20, y);
+
+  y += 20;
+  doc.setFontSize(10);
+  doc.text('Gracias por tu compra', 20, y);
+
+  // Descargar PDF
+  doc.save(`boleta_${Date.now()}.pdf`);
+}
+
 
 }
