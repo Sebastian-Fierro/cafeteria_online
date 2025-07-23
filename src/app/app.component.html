@@ -29,6 +29,17 @@
           </div>
         </div>
 
+        <div class="form-check form-switch m-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="adminSwitch"
+            [(ngModel)]="isAdmin"
+            (change)="toggleAdminMode()"
+          />
+          <label class="form-check-label" for="adminSwitch"> Modo Admin </label>
+        </div>
+
         <!-- Menu -->
         <div class="list-group list-group-flush">
           <a
@@ -38,37 +49,48 @@
             <i class="fas fa-home me-2"></i> Home
           </a>
 
-        <a class="list-group-item list-group-item-action bg-light" data-bs-toggle="collapse" href="#productos" role="button">
-          <i class="fa fa-th-large me-2"></i> Productos
-        </a>
-        <div class="collapse ps-3" id="productos">
-          <app-category-sidebar (categorySelected)="onCategorySelected($event)"></app-category-sidebar>
-        </div>
-
           <a
+            class="list-group-item list-group-item-action bg-light"
+            data-bs-toggle="collapse"
+            href="#productos"
+            role="button"
+          >
+            <i class="fa fa-th-large me-2"></i> Productos
+          </a>
+          <div class="collapse ps-3" id="productos">
+            <app-category-sidebar
+              (categorySelected)="onCategorySelected($event)"
+            ></app-category-sidebar>
+          </div>
+
+          <a 
             [routerLink]="['carrito/carrito-listar']"
             class="list-group-item list-group-item-action bg-light"
             role="button"
           >
             <i class="fas fa-shopping-cart me-2"></i> Ver Carrito
           </a>
+
+          <a *ngIf="isAdmin"
+            [routerLink]="['order']"
+            class="list-group-item list-group-item-action bg-light"
+            role="button"
+          >
+            <i class="fas fa-receipt me-2"></i> Ver Órdenes
+          </a>
         </div>
       </div>
       <!-- /#sidebar-wrapper -->
 
-    <!-- Page Content -->
-    <div id="page-content-wrapper" class="flex-grow-1">
-      
-
-      <div class="container-fluid mt-3">
-        
-        
-        <div class="container-fluid">
-          <router-outlet></router-outlet>
+      <!-- Page Content -->
+      <div id="page-content-wrapper" class="flex-grow-1">
+        <div class="container-fluid mt-3">
+          <div class="container-fluid">
+            <router-outlet></router-outlet>
+          </div>
         </div>
       </div>
+      <!-- /#page-content-wrapper -->
     </div>
-    <!-- /#page-content-wrapper -->
-  </div>
-</body>
+  </body>
 </html>

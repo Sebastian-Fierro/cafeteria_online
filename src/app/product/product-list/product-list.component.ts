@@ -8,6 +8,7 @@ import { ModalAddComponent } from '../../services/modal-add/modal-add.component'
 import { ModalAddService } from '../../services/modal-add.service';
 import { FormsModule } from '@angular/forms';
 import { ModalCantidadComponent } from '../../modal-cantidad/modal-cantidad.component';
+import { AdminModeService } from '../../shared/admin-mode.service';
 
 @Component({
   selector: 'app-product-list',
@@ -39,7 +40,8 @@ export class ProductListComponent implements OnInit {
   constructor(
     public carritoService: CarritoService,
     public productService: ProductService,
-    public modalAddService: ModalAddService
+    public modalAddService: ModalAddService,
+    private adminService: AdminModeService
   ) {}
 
   onImageError(event: Event) {
@@ -64,6 +66,10 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.adminService.adminMode$.subscribe((modo) => {
+      this.isAdmin = modo;
+    });
+
     this.productService.getProducts().subscribe({
       next: (data) => (this.products = data),
       error: (err) => console.error('Error al cargar productos:', err),
