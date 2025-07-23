@@ -37,6 +37,7 @@ jobs:
 
   Deploy:
     needs: Ci2
+    runs-on: ubuntu-latest
     steps:
     - name: Configure SSH
       run: |
