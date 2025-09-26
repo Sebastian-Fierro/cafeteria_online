@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
             description: req.body.description,
             price: parseInt(req.body.price),
             stock: parseInt(req.body.stock),
-            categoryId: parseInt(req.body.categoryId),
+            categoryId: req.body.categoryId ? parseInt(req.body.categoryId) : null,
             image: req.body.image,
             isActive: req.body.isActive
         }
